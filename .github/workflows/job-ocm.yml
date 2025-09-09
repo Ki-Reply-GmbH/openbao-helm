@@ -1,5 +1,5 @@
 name: OCM
-on: [workflow_call]
+on: [workflow_call, pull_request]
 
 jobs:
   ocm:
@@ -71,7 +71,7 @@ jobs:
 
           ocm add componentversions --create --templater=go --file=ocm/transport.ctf ocm/component-constructor.yaml -- \
                             COMPONENT_NAME="openbao.org/openbao" \
-                            PROVIDER="openbao" \
+                            PROVIDER="ki-reply-gmbh" \
                             OPENBAO_REGISTRY=${OPENBAO_REGISTRY} \
                             OPENBAO_VERSION=${OPENBAO_VERSION} \
                             OPENBAO_CHART_VERSION=${CHART_VERSION} \
@@ -82,6 +82,6 @@ jobs:
 
       - name: Push OCM artifact to OCI
         run: |
-          OCI_REGISTRY="ghcr.io/openbao"
+          OCI_REGISTRY="ghcr.io/ki-reply-gmbh"
           echo "Pushing to ${OCI_REGISTRY} as user '${{ github.actor }}'"
           ocm transfer ctf ./ocm/transport.ctf OCIRegistry::${OCI_REGISTRY}
